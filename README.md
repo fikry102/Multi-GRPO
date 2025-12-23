@@ -28,8 +28,7 @@ $n \in \{1, \ldots, N_j\},\; m \in \{1, \ldots, M\}$, where $N_j$ denotes the nu
 
 <p align="center">
   
-  <b>📘 Note:</b> This is the official repository for the paper <a href="https://arxiv.org/abs/2512.00743">Multi-GRPO</a> 
-  This project is developed based on <a href="https://github.com/flow-grpo/Flow-GRPO">Flow-GRPO</a>. The full code and model is currently under review and will be released soon.
+  <b>📘 Note:</b> This is the official repository for the paper <a href="https://arxiv.org/abs/2512.00743">Multi-GRPO</a>. This project is developed based on <a href="https://github.com/flow-grpo/Flow-GRPO">Flow-GRPO</a>. The full code and model is currently under review and will be released soon.
 </p>
 
 ## ⭐ Citation
