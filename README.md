@@ -4,7 +4,6 @@
   <a href='https://arxiv.org/abs/2512.00743'>
     <img src='https://img.shields.io/badge/Multi--GRPO%20ArXiv-2512.00743-red?logo=arxiv'>
   </a>
-  &nbsp;
 </div>
 
 ### 🧠 Abstract
