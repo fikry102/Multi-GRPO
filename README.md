@@ -1,3 +1,50 @@
+<h1 align="center">Multi-GRPO: Multi-Group Advantage Estimation for Text-to-Image Generation with Tree-Based Trajectories and Multiple Rewards</h1>
+
+<div align="center">
+  <a href='https://arxiv.org/abs/2512.00743'>
+    <img src='https://img.shields.io/badge/Multi--GRPO%20ArXiv-2512.00743-red?logo=arxiv'>
+  </a>
+  &nbsp;
+</div>
+
+---
+
+<p align="center">
+  <b>📘 Note:</b> This is the official repository for the paper  
+  <a href="https://arxiv.org/abs/2512.00743">Multi-GRPO.</a>  
+  The project is developed based on <a href="https://github.com/flow-grpo/Flow-GRPO">Flow-GRPO</a>.  
+  The full code and model is currently under review and will be released soon.
+</p>
+
+---
+
+### 🧠 Abstract
+
+Recently, Group Relative Policy Optimization (GRPO) has shown promising potential for aligning text-to-image (T2I) models, yet existing GRPO-based methods suffer from two critical limitations. (1) *Shared credit assignment:* trajectory-level advantages derived from group-normalized sparse terminal rewards are uniformly applied across timesteps, failing to accurately estimate the potential of early denoising steps with vast exploration spaces. (2) *Reward-mixing:* predefined weights for combining multi-objective rewards (e.g., text accuracy, visual quality, text color) — which have mismatched scales and variance — lead to unstable gradients and conflicting updates. To address these issues, we propose **Multi-GRPO**, a multi-group advantage estimation framework with two orthogonal grouping mechanisms. For better credit assignment, we introduce **tree-based trajectories** inspired by Monte Carlo Tree Search: branching trajectories at selected early denoising steps naturally form temporal groups, enabling accurate advantage estimation for early steps via descendant leaves while amortizing computation through shared prefixes. For multi-objective optimization, we introduce **reward-based grouping** to compute advantages for each reward function independently before aggregation, disentangling conflicting signals. To facilitate evaluation of multiple-objective alignment, we curate *OCR-Color-10*, a visual text rendering dataset with explicit color constraints. Across the single-reward *PickScore-25k* and multi-objective *OCR-Color-10* benchmarks, Multi-GRPO achieves superior stability and alignment performance, effectively balancing conflicting objectives.  
+
+---
+
+[![Method Overview](assets/method_overview.png)](assets/method_overview.pdf)
+We introduce two orthogonal grouping mechanisms to address the limitations of standard GRPO. **(Left)** *Tree-Based Trajectories* by branching at early steps: To solve the *shared credit assignment* problem, we replace independent rollouts with a tree-structured rollout. Early-step actions are evaluated based on a diverse set of descendant leaves, yielding more accurate estimates for critical early decisions. **(Right)** *Reward-Based Grouping:* To solve the *reward-mixing* problem in multi-objective optimization, we normalize advantages for each reward function independently before aggregation. This disentangles conflicting signals and prevents certain rewards from dominating the learning process. 
+
+$n \in \{1, \ldots, N_j\},\; m \in \{1, \ldots, M\}$, where $N_j$ denotes the number of nodes at step $j$.
+
+---
+
+## ⭐ Citation
+
+If you find [Multi-GRPO](https://scholar.google.com/scholar?oi=bibs&cluster=9491474262913536400) useful for your research or projects, please cite our paper:
+
+```bibtex
+@article{lyu2025multi,
+  title={Multi-GRPO: Multi-Group Advantage Estimation for Text-to-Image Generation with Tree-Based Trajectories and Multiple Rewards},
+  author={Lyu, Qiang and Chen, Zicong and Wang, Chongxiao and Shi, Haolin and Gao, Shibo and Piao, Ran and Zeng, Youwei and Si, Jianlou and Ding, Fei and Li, Jing and others},
+  journal={arXiv preprint arXiv:2512.00743},
+  year={2025}
+}
+
+```
+
 <h1 align="center"> Flow-GRPO:<br>Training Flow Matching Models via Online RL </h1>
 <div align="center">
   <a href='https://arxiv.org/abs/2505.05470'><img src='https://img.shields.io/badge/ArXiv-red?logo=arxiv'></a>  &nbsp;
