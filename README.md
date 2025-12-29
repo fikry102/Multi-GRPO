@@ -25,8 +25,6 @@ $n \in \{1, \ldots, N_j\},\; m \in \{1, \ldots, M\}$, where $N_j$ denotes the nu
 
 ---
 
-## Star History
-
 [![Star History Chart](https://api.star-history.com/svg?repos=fikry102/Multi-GRPO&type=date&legend=bottom-right)](https://www.star-history.com/#fikry102/Multi-GRPO&type=date&legend=bottom-right)
 
 
