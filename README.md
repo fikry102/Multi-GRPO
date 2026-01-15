@@ -27,7 +27,6 @@ $n \in \{1, \ldots, N_j\},\; m \in \{1, \ldots, M\}$, where $N_j$ denotes the nu
 
 ---
 ## 🎨 Qualitative Comparison
-
 Our method demonstrates superior performance across different base models. Click on the images below to view high-resolution PDF versions.
 
 - **SD3.5-M Results:**
