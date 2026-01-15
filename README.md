@@ -14,6 +14,8 @@ To address these issues, we propose **Multi-GRPO**, a multi-group advantage esti
 
 ---
 
+
+
 [![Method Overview](assets/method_overview.png)](assets/method_overview.pdf)
 We introduce two orthogonal grouping mechanisms to address the limitations of standard GRPO. 
 
@@ -24,6 +26,20 @@ We introduce two orthogonal grouping mechanisms to address the limitations of st
 $n \in \{1, \ldots, N_j\},\; m \in \{1, \ldots, M\}$, where $N_j$ denotes the number of nodes at step $j$.
 
 ---
+## ⭐ Qualitative Comparision
+
+## ⭐ Qualitative Comparison
+
+Our method demonstrates superior performance across different base models. Click on the images below to view high-resolution PDF versions.
+
+**SD3.5-M Results:**
+
+[![SD3.5-M](assets/SD3.5-M_qualitative_comp_page3_1.png)](assets/SD3.5-M_qualitative_comp_page3_1.pdf)
+
+**FLUX.1-Dev Results:**
+
+[![FLUX.1-Dev](assets/FLUX.1-Dev_qualitative_comp_page1.png)](assets/FLUX.1-Dev_qualitative_comp_page1.pdf)
+
 
 [![Star History Chart](https://api.star-history.com/svg?repos=fikry102/Multi-GRPO&type=date&legend=bottom-right)](https://www.star-history.com/#fikry102/Multi-GRPO&type=date&legend=bottom-right)
 
