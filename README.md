@@ -1,3 +1,5 @@
+
+
 <h1 align="center">Multi-GRPO: Multi-Group Advantage Estimation for Text-to-Image Generation with Tree-Based Trajectories and Multiple Rewards</h1>
 
 <div align="center">
@@ -219,7 +221,7 @@ Please use scripts in `scripts/multi_node/sd3_fast` to run these experiments.
 ### 1. Environment Set Up
 Clone this repository and install packages.
 ```bash
-git clone https://github.com/yifan123/flow_grpo.git
+git clone https://github.com/fikry102/Multi-GRPO.git flow_grpo
 cd flow_grpo
 conda create -n flow_grpo python=3.10.16
 pip install -e .
@@ -426,7 +428,7 @@ bash scripts/multi_node/bagel/main.sh 3
 Using the provided configuration, the resulting reward(PickScore) curve of Bagel on the test set is shown below (with 32 GPU).
 
 <p align="center">
-  <img src="flow_grpo/assets/bagel_pickscore.svg" alt="Flow-GRPO-Fast Illustration" width="350"/>
+  <img src="flow_grpo/assets/bagel_pickscore.svg" alt="Flow-GRPO-Fast Illustration" width=350"/>
 </p>
 
 **[Note]: About resource requirements & OOM**
