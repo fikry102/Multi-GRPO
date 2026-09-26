@@ -6,7 +6,7 @@
   </a>
 </div>
 
-### OCR-Color-10 Dataset
+### arXiv and Dataset Release
 
 - 🎉 **ArXiv publication:** Our paper is available on [arXiv:2512.00743](https://arxiv.org/abs/2512.00743).
 - 🎉 **Dataset release:** On **December 23, 2025**, we released **OCR-Color-10**, a visual text rendering dataset with explicit color constraints for multi-objective text-to-image reinforcement learning. The dataset files are included in this repository:
