@@ -34,9 +34,11 @@ We introduce two orthogonal grouping mechanisms to address the limitations of st
 
 **(Left)** *Tree-Based Trajectories* by branching at early steps: To solve the *shared credit assignment* problem, we replace independent rollouts with a tree-structured rollout. Early-step actions are evaluated based on a diverse set of descendant leaves, yielding more accurate estimates for critical early decisions.
 
+For a node $\mathbf{s}_j^n$, we estimate its value by averaging the rewards of its descendant leaves: $R_j^n = \frac{1}{|\mathcal{D}_j^n|}\sum_{\ell\in\mathcal{D}_j^n}R_0^\ell$, and normalize these values within each temporal group.
+
 **(Right)** *Reward-Based Grouping:* To solve the *reward-mixing* problem in multi-objective optimization, we normalize advantages for each reward function independently before aggregation. This disentangles conflicting signals and prevents certain rewards from dominating the learning process.
 
-$n \in \{1, \ldots, N_j\},\; m \in \{1, \ldots, M\}$, where $N_j$ denotes the number of nodes at step $j$.
+For reward $m$, we first compute $\hat{A}_m^i = \frac{R_m^i - \mu_m}{\sigma_m}$ and then aggregate the normalized advantages as $\hat{A}^i = \frac{1}{M}\sum_{m=1}^{M} w_m\hat{A}_m^i$.
 
 ---
 ## 🎨 Qualitative Comparison
