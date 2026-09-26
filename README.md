@@ -17,7 +17,7 @@ The dataset is used to evaluate whether a model can simultaneously satisfy text-
 
 ### arXiv Release
 
-🎉 Our paper is available on [arXiv:2512.00743](https://arxiv.org/abs/2512.00743).
+🎉 Our paper was first posted to arXiv on **November 30, 2025**: [arXiv:2512.00743](https://arxiv.org/abs/2512.00743).
 
 ---
 
