@@ -16,6 +16,15 @@ To address these issues, we propose **Multi-GRPO**, a multi-group advantage esti
 
 
 
+### 🎉 OCR-Color-10 Dataset
+
+We contribute **OCR-Color-10**, a visual text rendering dataset with explicit color constraints for multi-objective text-to-image reinforcement learning. The dataset files are included in this repository:
+
+- [Training split](dataset/OCR-Color-10/train_ocr_with_color.csv)
+- [Test split](dataset/OCR-Color-10/test_ocr_with_color.csv)
+
+The dataset is used to evaluate whether a model can satisfy text content and color constraints simultaneously. 🎉✨
+
 [![Method Overview](assets/method_overview.png)](assets/method_overview.pdf)
 We introduce two orthogonal grouping mechanisms to address the limitations of standard GRPO. 
 
