@@ -34,7 +34,14 @@ We introduce two orthogonal grouping mechanisms to address the limitations of st
 
 **(Left)** *Tree-Based Trajectories* by branching at early steps: To solve the *shared credit assignment* problem, we replace independent rollouts with a tree-structured rollout. Early-step actions are evaluated based on a diverse set of descendant leaves, yielding more accurate estimates for critical early decisions.
 
-Branching is performed at predefined early denoising steps: each selected state splits into multiple child branches, while the shared prefix is computed only once. For a node $\mathbf{s}_j^n$, we estimate its value by averaging the rewards of its descendant leaves and normalize these values within each temporal group:
+Branching is performed at predefined early denoising steps: each selected state splits into multiple child branches, while the shared prefix is computed only once. Specifically, we reuse the shared mean $\mu$ and sample independent Gaussian noise for each child branch:
+
+$$
+\mathbf{x}_{t_{j-1}}^{(i)} = \mu + \sigma_{t_j}\sqrt{\Delta t_j}\,\mathbf{z}^{(i)},
+\qquad \mathbf{z}^{(i)} \overset{\mathrm{i.i.d.}}{\sim} \mathcal{N}(0,\mathbf{I}).
+$$
+
+For a node $\mathbf{s}_j^n$, we estimate its value by averaging the rewards of its descendant leaves and normalize these values within each temporal group:
 
 $$
 R_j^n = \frac{1}{|\mathcal{D}_j^n|}\sum_{\ell\in\mathcal{D}_j^n}R_0^\ell.
