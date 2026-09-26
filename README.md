@@ -34,11 +34,21 @@ We introduce two orthogonal grouping mechanisms to address the limitations of st
 
 **(Left)** *Tree-Based Trajectories* by branching at early steps: To solve the *shared credit assignment* problem, we replace independent rollouts with a tree-structured rollout. Early-step actions are evaluated based on a diverse set of descendant leaves, yielding more accurate estimates for critical early decisions.
 
-For a node $\mathbf{s}_j^n$, we estimate its value by averaging the rewards of its descendant leaves: $R_j^n = \frac{1}{|\mathcal{D}_j^n|}\sum_{\ell\in\mathcal{D}_j^n}R_0^\ell$, and normalize these values within each temporal group.
+Branching is performed at predefined early denoising steps: each selected state splits into multiple child branches, while the shared prefix is computed only once. For a node $\mathbf{s}_j^n$, we estimate its value by averaging the rewards of its descendant leaves and normalize these values within each temporal group:
+
+$$
+R_j^n = \frac{1}{|\mathcal{D}_j^n|}\sum_{\ell\in\mathcal{D}_j^n}R_0^\ell.
+$$
 
 **(Right)** *Reward-Based Grouping:* To solve the *reward-mixing* problem in multi-objective optimization, we normalize advantages for each reward function independently before aggregation. This disentangles conflicting signals and prevents certain rewards from dominating the learning process.
 
-For reward $m$, we first compute $\hat{A}_m^i = \frac{R_m^i - \mu_m}{\sigma_m}$ and then aggregate the normalized advantages as $\hat{A}^i = \frac{1}{M}\sum_{m=1}^{M} w_m\hat{A}_m^i$.
+For each reward, we first normalize its advantage independently and then aggregate the normalized advantages:
+
+$$
+\hat{A}_m^i = \frac{R_m^i - \mu_m}{\sigma_m},
+\qquad
+\hat{A}^i = \frac{1}{M}\sum_{m=1}^{M} w_m\hat{A}_m^i.
+$$
 
 ---
 ## 🎨 Qualitative Comparison
