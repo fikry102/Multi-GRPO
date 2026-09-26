@@ -8,7 +8,8 @@
 
 ### 🎉 OCR-Color-10 Dataset
 
-Our paper is available on [arXiv:2512.00743](https://arxiv.org/abs/2512.00743). On **December 23, 2025**, we released **OCR-Color-10**, a visual text rendering dataset with explicit color constraints for multi-objective text-to-image reinforcement learning. The dataset files are included in this repository:
+- **ArXiv publication:** Our paper is available on [arXiv:2512.00743](https://arxiv.org/abs/2512.00743).
+- **Dataset release:** On **December 23, 2025**, we released **OCR-Color-10**, a visual text rendering dataset with explicit color constraints for multi-objective text-to-image reinforcement learning. The dataset files are included in this repository:
 
 - [Training split](dataset/OCR-Color-10/train_ocr_with_color.csv)
 - [Test split](dataset/OCR-Color-10/test_ocr_with_color.csv)
