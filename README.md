@@ -6,15 +6,18 @@
   </a>
 </div>
 
-### arXiv and Dataset Release
+### Dataset Release
 
-- 🎉 **ArXiv publication:** Our paper is available on [arXiv:2512.00743](https://arxiv.org/abs/2512.00743).
-- 🎉 **Dataset release:** On **December 23, 2025**, we released **OCR-Color-10**, a visual text rendering dataset with explicit color constraints for multi-objective text-to-image reinforcement learning. The dataset files are included in this repository:
+🎉 On **December 23, 2025**, we released **OCR-Color-10**, a visual text rendering dataset with explicit color constraints for multi-objective text-to-image reinforcement learning. The dataset files are included in this repository:
 
 - [Training split](dataset/OCR-Color-10/train_ocr_with_color.csv)
 - [Test split](dataset/OCR-Color-10/test_ocr_with_color.csv)
 
 The dataset is used to evaluate whether a model can simultaneously satisfy text-content and color constraints while maintaining aesthetic quality.
+
+### arXiv Release
+
+🎉 Our paper is available on [arXiv:2512.00743](https://arxiv.org/abs/2512.00743).
 
 ---
 
