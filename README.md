@@ -6,31 +6,31 @@
   </a>
 </div>
 
-### 🧠 Abstract
-
-Recently, Group Relative Policy Optimization (GRPO) has shown promising potential for aligning text-to-image (T2I) models, yet existing GRPO-based methods suffer from two critical limitations. (1) *Shared credit assignment:* trajectory-level advantages derived from group-normalized sparse terminal rewards are uniformly applied across timesteps, failing to accurately estimate the potential of early denoising steps with vast exploration spaces. (2) *Reward-mixing:* predefined weights for combining multi-objective rewards (e.g., text accuracy, visual quality, text color) — which have mismatched scales and variance — lead to unstable gradients and conflicting updates.
-
-To address these issues, we propose **Multi-GRPO**, a multi-group advantage estimation framework with two orthogonal grouping mechanisms. For better credit assignment, we introduce **tree-based trajectories** inspired by Monte Carlo Tree Search: branching trajectories at selected early denoising steps naturally form temporal groups, enabling accurate advantage estimation for early steps via descendant leaves while amortizing computation through shared prefixes. For multi-objective optimization, we introduce **reward-based grouping** to compute advantages for each reward function independently before aggregation, disentangling conflicting signals. To facilitate evaluation of multiple-objective alignment, we curate *OCR-Color-10*, a visual text rendering dataset with explicit color constraints. Across the single-reward *PickScore-25k* and multi-objective *OCR-Color-10* benchmarks, Multi-GRPO achieves superior stability and alignment performance, effectively balancing conflicting objectives.  
-
----
-
-
-
 ### 🎉 OCR-Color-10 Dataset
 
-We contribute **OCR-Color-10**, a visual text rendering dataset with explicit color constraints for multi-objective text-to-image reinforcement learning. The dataset files are included in this repository:
+Our paper is available on [arXiv:2512.00743](https://arxiv.org/abs/2512.00743). On **December 23, 2025**, we released **OCR-Color-10**, a visual text rendering dataset with explicit color constraints for multi-objective text-to-image reinforcement learning. The dataset files are included in this repository:
 
 - [Training split](dataset/OCR-Color-10/train_ocr_with_color.csv)
 - [Test split](dataset/OCR-Color-10/test_ocr_with_color.csv)
 
-The dataset is used to evaluate whether a model can satisfy text content and color constraints simultaneously. 🎉✨
+The dataset is used to evaluate whether a model can simultaneously satisfy text-content and color constraints while maintaining aesthetic quality. 🎉✨
+
+---
+
+### 🧠 Abstract
+
+Recently, Group Relative Policy Optimization (GRPO) has shown promising potential for aligning text-to-image (T2I) models, yet existing GRPO-based methods suffer from two critical limitations. (1) *Shared credit assignment:* trajectory-level advantages derived from group-normalized sparse terminal rewards are uniformly applied across timesteps, failing to accurately estimate the potential of early denoising steps with vast exploration spaces. (2) *Reward-mixing:* predefined weights for combining multi-objective rewards (e.g., text accuracy, visual quality, text color) — which have mismatched scales and variance — lead to unstable gradients and conflicting updates.
+
+To address these issues, we propose **Multi-GRPO**, a multi-group advantage estimation framework with two orthogonal grouping mechanisms. For better credit assignment, we introduce **tree-based trajectories** inspired by Monte Carlo Tree Search: branching trajectories at selected early denoising steps naturally form temporal groups, enabling accurate advantage estimation for early steps via descendant leaves while amortizing computation through shared prefixes. For multi-objective optimization, we introduce **reward-based grouping** to compute advantages for each reward function independently before aggregation, disentangling conflicting signals. To facilitate evaluation of multiple-objective alignment, we curate *OCR-Color-10*, a visual text rendering dataset with explicit color constraints. Across the single-reward *PickScore-25k* and multi-objective *OCR-Color-10* benchmarks, Multi-GRPO achieves superior stability and alignment performance, effectively balancing conflicting objectives.
+
+---
 
 [![Method Overview](assets/method_overview.png)](assets/method_overview.pdf)
-We introduce two orthogonal grouping mechanisms to address the limitations of standard GRPO. 
+We introduce two orthogonal grouping mechanisms to address the limitations of standard GRPO.
 
-**(Left)** *Tree-Based Trajectories* by branching at early steps: To solve the *shared credit assignment* problem, we replace independent rollouts with a tree-structured rollout. Early-step actions are evaluated based on a diverse set of descendant leaves, yielding more accurate estimates for critical early decisions. 
+**(Left)** *Tree-Based Trajectories* by branching at early steps: To solve the *shared credit assignment* problem, we replace independent rollouts with a tree-structured rollout. Early-step actions are evaluated based on a diverse set of descendant leaves, yielding more accurate estimates for critical early decisions.
 
-**(Right)** *Reward-Based Grouping:* To solve the *reward-mixing* problem in multi-objective optimization, we normalize advantages for each reward function independently before aggregation. This disentangles conflicting signals and prevents certain rewards from dominating the learning process. 
+**(Right)** *Reward-Based Grouping:* To solve the *reward-mixing* problem in multi-objective optimization, we normalize advantages for each reward function independently before aggregation. This disentangles conflicting signals and prevents certain rewards from dominating the learning process.
 
 $n \in \{1, \ldots, N_j\},\; m \in \{1, \ldots, M\}$, where $N_j$ denotes the number of nodes at step $j$.
 
@@ -54,7 +54,7 @@ Our method demonstrates superior performance across different base models. Click
 
 
 <p align="center">
-  
+
   <b>📘 Note:</b> This is the official repository for the paper <a href="https://arxiv.org/abs/2512.00743">Multi-GRPO</a>. This project is developed based on <a href="https://github.com/flow-grpo/Flow-GRPO">Flow-GRPO</a>. The full code and model is currently under review and will be released soon.
 </p>
 
@@ -78,8 +78,8 @@ If you find [Multi-GRPO](https://scholar.google.com/scholar?oi=bibs&cluster=9491
 <div align="center">
   <a href='https://arxiv.org/abs/2505.05470'><img src='https://img.shields.io/badge/ArXiv-red?logo=arxiv'></a>  &nbsp;
   <a href='https://gongyeliu.github.io/Flow-GRPO/'><img src='https://img.shields.io/badge/Visualization-green?logo=github'></a> &nbsp;
-  <a href="https://github.com/yifan123/flow_grpo"><img src="https://img.shields.io/badge/Code-9E95B7?logo=github"></a> &nbsp; 
-  <a href='https://huggingface.co/collections/jieliu/sd35m-flowgrpo-68298ec27a27af64b0654120'><img src='https://img.shields.io/badge/Model-blue?logo=huggingface'></a> &nbsp; 
+  <a href="https://github.com/yifan123/flow_grpo"><img src="https://img.shields.io/badge/Code-9E95B7?logo=github"></a> &nbsp;
+  <a href='https://huggingface.co/collections/jieliu/sd35m-flowgrpo-68298ec27a27af64b0654120'><img src='https://img.shields.io/badge/Model-blue?logo=huggingface'></a> &nbsp;
   <a href='https://huggingface.co/spaces/jieliu/SD3.5-M-Flow-GRPO'><img src='https://img.shields.io/badge/Demo-blue?logo=huggingface'></a> &nbsp;
 </div>
 
@@ -133,7 +133,7 @@ accelerate launch --config_file scripts/accelerate_configs/multi_gpu.yaml --num_
 - Adding support for CLIPScore as reward model.
 - Introducing `config.sample.same_latent` to control whether the same noise is reused for identical prompts, addressing [Issue #7](https://github.com/yifan123/flow_grpo/issues/7).
 
-**2025-05-15** 
+**2025-05-15**
 
 - 🔥We showcase image examples from three tasks and their training evolution at https://gongyeliu.github.io/Flow-GRPO. Check them out!
 - 🔥We now provide an online demo for all three tasks at https://huggingface.co/spaces/jieliu/SD3.5-M-Flow-GRPO. You're welcome to try it out!
@@ -159,7 +159,7 @@ The figure below shows the test-set performance curves using GenEval and PickSco
 
 <p align="center">
   <img src="flow_grpo/assets/flow_grpo_fast_nocfg_geneval.svg" alt="Flow-GRPO-Fast Illustration" width="350"/>
-  <img src="flow_grpo/assets/flow_grpo_fast_nocfg_pickscore.svg" alt="Flow-GRPO-Fast Illustration" width="350"/> 
+  <img src="flow_grpo/assets/flow_grpo_fast_nocfg_pickscore.svg" alt="Flow-GRPO-Fast Illustration" width="350"/>
 </p>
 
 ## 🛡️ Over-optimization (GRPO-Guard) 🔥🔥
@@ -206,7 +206,7 @@ bash scripts/multi_node/sd3_grpo_guard.sh 1
 ```
 
 ## Flow-GRPO-Fast
-We propose Flow-GRPO-Fast, an accelerated variant of Flow-GRPO that requires training on **only one or two denoising step** per trajectory. For each prompt, we first generate a deterministic trajectory using ODE sampling. At a randomly chosen intermediate step, we inject noise and switch to SDE sampling to generate a group. The rest of the process continues with ODE sampling. This confines stochasticity to one or two steps, allowing training to focus solely on that steps. This few-step training idea was primarily proposed by [Ziyang Yuan](https://scholar.google.com/citations?user=fWxWEzsAAAAJ&hl=en) during our discussions in early June. 
+We propose Flow-GRPO-Fast, an accelerated variant of Flow-GRPO that requires training on **only one or two denoising step** per trajectory. For each prompt, we first generate a deterministic trajectory using ODE sampling. At a randomly chosen intermediate step, we inject noise and switch to SDE sampling to generate a group. The rest of the process continues with ODE sampling. This confines stochasticity to one or two steps, allowing training to focus solely on that steps. This few-step training idea was primarily proposed by [Ziyang Yuan](https://scholar.google.com/citations?user=fWxWEzsAAAAJ&hl=en) during our discussions in early June.
 
 Flow-GRPO-Fast achieves significant efficiency gains:
 
@@ -408,7 +408,7 @@ Using the provided configuration, the resulting reward curve of Qwen-Image-Edit 
 
 <p align="center">
   <img src="flow_grpo/assets/qwenimageedit_epoch.png" alt="Flow-GRPO-Fast Illustration" width="350"/>
-  <img src="flow_grpo/assets/qwenimageedit_time.png" alt="Flow-GRPO-Fast Illustration" width="350"/> 
+  <img src="flow_grpo/assets/qwenimageedit_time.png" alt="Flow-GRPO-Fast Illustration" width="350"/>
 </p>
 ---
 </details>
@@ -517,7 +517,7 @@ The following reward models are currently supported:
 * **JPEG\_Compressibility** measures image size as a proxy for quality.
 * **UnifiedReward** is a state-of-the-art reward model for multimodal understanding and generation, topping the human preference leaderboard.
 
-        
+
 ## ✨ Important Hyperparameters
 You can adjust the parameters in `config/grpo.py` to tune different hyperparameters. An empirical finding is that `config.sample.train_batch_size * num_gpu / config.sample.num_image_per_prompt * config.sample.num_batches_per_epoch = 48`, i.e., `group_number=48`, `group_size=24`.
 Additionally, setting `config.train.gradient_accumulation_steps = config.sample.num_batches_per_epoch // 2`.
@@ -538,13 +538,13 @@ If you find Flow-GRPO useful for your research or projects, we would greatly app
 If you find GRPO-Guard useful for your research or projects, we would greatly appreciate it if you could cite the following paper:
 ```
 @misc{wang2025grpoguardmitigatingimplicitoveroptimization,
-    title={GRPO-Guard: Mitigating Implicit Over-Optimization in Flow Matching via Regulated Clipping}, 
+    title={GRPO-Guard: Mitigating Implicit Over-Optimization in Flow Matching via Regulated Clipping},
     author={Jing Wang and Jiajun Liang and Jie Liu and Henglin Liu and Gongye Liu and Jun Zheng and Wanyuan Pang and Ao Ma and Zhenyu Xie and Xintao Wang and Meng Wang and Pengfei Wan and Xiaodan Liang},
     year={2025},
     eprint={2510.22319},
     archivePrefix={arXiv},
     primaryClass={cs.CV},
-    url={https://arxiv.org/abs/2510.22319}, 
+    url={https://arxiv.org/abs/2510.22319},
 }
 ```
 If you find Flow-DPO useful for your research or projects, we would greatly appreciate it if you could cite the following paper:
