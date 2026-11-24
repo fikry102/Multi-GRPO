@@ -12,6 +12,7 @@
 
 - [Training split](dataset/OCR-Color-10/train_ocr_with_color.csv)
 - [Test split](dataset/OCR-Color-10/test_ocr_with_color.csv)
+- [Qualitative comparison subset](dataset/OCR-Color-10/qualitative_comparison_test_subset.csv) (prompts used for qualitative comparison figures)
 
 The dataset is used to evaluate whether a model can simultaneously satisfy text-content and color constraints while maintaining aesthetic quality.
 
@@ -54,7 +55,7 @@ For each reward, we first normalize its advantage independently and then aggrega
 $$
 \hat{A}_m^i = \frac{R_m^i - \mu_m}{\sigma_m},
 \qquad
-\hat{A}^i = \frac{1}{M}\sum_{m=1}^{M} w_m\hat{A}_m^i.
+\hat{A}^i = \sum_{m=1}^{M} w_m\hat{A}_m^i.
 $$
 
 ---
