@@ -1,10 +1,14 @@
-<h1 align="center">Multi-GRPO: Multi-Group Advantage Estimation for Text-to-Image Generation with Tree-Based Trajectories and Multiple Rewards</h1>
+<h1 align="center">Multi-GRPO: Multi-Group Advantage Estimation via Step-Wise and Reward-Wise Grouping for Text-to-Image Alignment</h1>
 
 <div align="center">
   <a href='https://arxiv.org/abs/2512.00743'>
     <img src='https://img.shields.io/badge/Multi--GRPO%20ArXiv-2512.00743-red?logo=arxiv'>
   </a>
 </div>
+
+### Journal version
+
+**November 25, 2026.** We submitted the revised Multi-GRPO manuscript to *Pattern Recognition*. The abstract and method overview below follow the journal manuscript. Its terms *step-wise grouping* and *reward-wise grouping* describe the tree-based advantage estimation and reward-based grouping, respectively, in the [original arXiv preprint](https://arxiv.org/abs/2512.00743).
 
 ### Dataset Release
 
@@ -24,39 +28,35 @@ The dataset is used to evaluate whether a model can simultaneously satisfy text-
 
 ### 🧠 Abstract
 
-Recently, Group Relative Policy Optimization (GRPO) has shown promising potential for aligning text-to-image (T2I) models, yet existing GRPO-based methods suffer from two critical limitations. (1) *Shared credit assignment:* trajectory-level advantages derived from group-normalized sparse terminal rewards are uniformly applied across timesteps, failing to accurately estimate the potential of early denoising steps with vast exploration spaces. (2) *Reward-mixing:* predefined weights for combining multi-objective rewards (e.g., text accuracy, visual quality, text color) — which have mismatched scales and variance — lead to unstable gradients and conflicting updates.
+Group Relative Policy Optimization (GRPO) has recently been applied to text-to-image alignment. Standard GRPO-based formulations assign the same trajectory-level advantage derived from terminal rewards to all denoising transitions within each trajectory, resulting in a shared credit assignment issue. In multi-reward training, combining rewards before normalization can distort each reward's intended contribution.
 
-To address these issues, we propose **Multi-GRPO**, a multi-group advantage estimation framework with two orthogonal grouping mechanisms. For better credit assignment, we introduce **tree-based trajectories** inspired by Monte Carlo Tree Search: branching trajectories at selected early denoising steps naturally form temporal groups, enabling accurate advantage estimation for early steps via descendant leaves while amortizing computation through shared prefixes. For multi-objective optimization, we introduce **reward-based grouping** to compute advantages for each reward function independently before aggregation, disentangling conflicting signals. To facilitate evaluation of multiple-objective alignment, we curate *OCR-Color-10*, a visual text rendering dataset with explicit color constraints. Across the single-reward *PickScore-25k* and multi-objective *OCR-Color-10* benchmarks, Multi-GRPO achieves superior stability and alignment performance, effectively balancing conflicting objectives.
+To address these issues, we propose Multi-GRPO, a multi-group advantage estimation framework that applies GRPO-style normalization to finer-grained groups. Step-wise grouping branches each active path at selected early denoising steps. For each segment, we average the rewards of each path's descendant leaves and normalize these averages across active paths, yielding one advantage per path shared by its transitions. Our derivation shows that, compared with a single continuation, averaging leaf rewards reduces the mean squared error of return estimates by the expected within-subtree reward variance.
 
----
+In multi-reward alignment, reward-wise grouping normalizes rewards independently and combines their advantages using the chosen weights. Our analysis shows that mixing equally weighted rewards before normalization gives greater effective weight to rewards with larger within-group standard deviations.
 
-[![Method Overview](assets/method_overview.png)](assets/method_overview.pdf)
-We introduce two orthogonal grouping mechanisms to address the limitations of standard GRPO.
+We also introduce *OCR-Color-10*, a visual text-rendering benchmark with explicit color constraints. On *PickScore-25k*, step-wise grouping achieves a PickScore of 24.24, compared with 23.65 for Flow-GRPO. On *OCR-Color-10*, Multi-GRPO achieves 0.9840, 0.9549, and 0.9147 for text–color consistency, OCR accuracy, and the PickScore reward, respectively, compared with 0.9471, 0.9428, and 0.8689 for Flow-GRPO.
 
-**(Left)** *Tree-Based Trajectories* by branching at early steps: To solve the *shared credit assignment* problem, we replace independent rollouts with a tree-structured rollout. Early-step actions are evaluated based on a diverse set of descendant leaves, yielding more accurate estimates for critical early decisions.
+### Method
 
-Branching is performed at predefined early denoising steps: each selected state splits into multiple child branches, while the shared prefix is computed only once. Specifically, we reuse the shared mean $\mu$ and sample independent Gaussian noise for each child branch:
+[![Overview of step-wise and reward-wise grouping](assets/method_overview.png)](assets/method_overview.pdf)
 
-$$
-\mathbf{x}_{t_{j-1}}^{(i)} = \mu + \sigma_{t_j}\sqrt{\Delta t_j}\,\mathbf{z}^{(i)},
-\qquad \mathbf{z}^{(i)} \overset{\mathrm{i.i.d.}}{\sim} \mathcal{N}(0,\mathbf{I}).
-$$
+**Step-wise grouping (left).** Branching at selected early denoising steps produces multiple continuations of a shared prefix. For each active path, we average the terminal rewards of its descendant leaves. We normalize these returns across active paths for the same prompt at the same denoising step. Each path shares its advantage across the transitions in that segment.
 
-For a node $\mathbf{s}_j^n$, we estimate its value by averaging the rewards of its descendant leaves and normalize these values within each temporal group:
+**Reward-wise grouping (right).** We compute an advantage separately for each reward, then take their weighted sum. With tree-structured rollouts, each reward uses the step-wise calculation above.
 
-$$
-R_j^n = \frac{1}{|\mathcal{D}_j^n|}\sum_{\ell\in\mathcal{D}_j^n}R_0^\ell.
-$$
+### Train Multi-GRPO
 
-**(Right)** *Reward-Based Grouping:* To solve the *reward-mixing* problem in multi-objective optimization, we normalize advantages for each reward function independently before aggregation. This disentangles conflicting signals and prevents certain rewards from dominating the learning process.
+Run from the repository root after installing the package with `pip install -e .`. The SD3.5-M reward pipeline also requires PaddlePaddle, `paddleocr==2.9.1`, and `python-Levenshtein` (see the OCR setup below). Both recipes require access to the base model weights.
 
-For each reward, we first normalize its advantage independently and then aggregate the normalized advantages:
+```bash
+# FLUX.1-Dev on PickScore-25k
+accelerate launch --config_file scripts/accelerate_configs/deepspeed_zero2.yaml --num_processes 8 scripts/train_flux_tree.py --config config/multi_grpo.py:pickscore
 
-$$
-\hat{A}_m^i = \frac{R_m^i - \mu_m}{\sigma_m},
-\qquad
-\hat{A}^i = \sum_{m=1}^{M} w_m\hat{A}_m^i.
-$$
+# SD3.5-M on OCR-Color-10
+accelerate launch --config_file scripts/accelerate_configs/deepspeed_zero2.yaml --num_processes 8 scripts/train_sd3_m_grpo.py --config config/multi_grpo.py:ocr_color
+```
+
+Each rollout batch uses one prompt shared across 8 GPUs, with 1 initial path per GPU. Each path branches into 3 at update 2, then each child branches into 2 at update 4. The SD3.5-M recipe combines the OCR, color, and PickScore advantages with unit weights. The [training configurations](config/multi_grpo.py) specify both datasets, model IDs, and checkpoint directories. Set `branches = ()` for independent rollouts. With SD3.5-M, setting `reward_wise_grouping = False` mixes the rewards before normalization.
 
 ---
 ## 🎨 Qualitative Comparison
@@ -79,7 +79,7 @@ Our method demonstrates superior performance across different base models. Click
 
 <p align="center">
 
-  <b>📘 Note:</b> This is the official repository for the paper <a href="https://arxiv.org/abs/2512.00743">Multi-GRPO</a>. This project is developed based on <a href="https://github.com/flow-grpo/Flow-GRPO">Flow-GRPO</a>. The full code and model is currently under review and will be released soon.
+  <b>📘 Note:</b> This is the official repository for the paper <a href="https://arxiv.org/abs/2512.00743">Multi-GRPO</a>. This project is developed based on <a href="https://github.com/flow-grpo/Flow-GRPO">Flow-GRPO</a>. The Multi-GRPO training commands appear above.
 </p>
 
 ## ⭐ Citation

@@ -134,3 +134,87 @@ if __name__ == "__main__":
     # Call scorer and print result
     reward = scorer([example_image], [example_prompt])
     print(f"OCR Reward: {reward}")
+
+
+class OcrWithColorScorer:
+    def __init__(self, use_gpu: bool = False):
+        """
+        OCR reward calculator
+        :param use_gpu: Whether to use GPU acceleration for PaddleOCR
+        """
+        self.ocr = PaddleOCR(
+            use_angle_cls=False,
+            lang="en",
+            use_gpu=use_gpu,
+            show_log=False,  # Disable unnecessary log output
+        )
+
+    @staticmethod
+    def merge_into_big_box(boxes: List[List[List[int]]]):
+        """
+        Return the enclosing axis-aligned box of all detected text regions.
+        """
+        if not boxes:
+            return None
+        xs = [pt[0] for quad in boxes for pt in quad]
+        ys = [pt[1] for quad in boxes for pt in quad]
+        return [min(xs), min(ys), max(xs), max(ys)]
+
+    @torch.no_grad()
+    def __call__(self,
+                images: Union[List[Image.Image], List[np.ndarray]],
+                metadatas: List[dict]
+                ) -> Tuple[List[float], List]:
+        """
+        Calculate OCR reward and detection results
+        :param images: List of input images (PIL or numpy format)
+        :param metadatas: List of metadata dicts with 'text' and 'color' keys
+        :return: (rewards, det_results) - rewards list and detection boxes (None if no detection)
+        """
+        rewards = []
+        det_results = []
+
+        # Ensure input lengths are consistent
+        assert len(images) == len(metadatas), "Images and metadatas must have the same length"
+
+        for img, metadata in zip(images, metadatas):
+            # Extract ground truth text from metadata
+            gt_text = metadata.get('text', '')
+
+            # Convert image format
+            if isinstance(img, Image.Image):
+                img = np.array(img)
+
+            try:
+                # OCR recognition
+                result = self.ocr.ocr(img, cls=False)
+                lines = result[0] if result and result[0] else []
+                boxes = [[[int(x), int(y)] for (x, y) in line[0]] for line in lines]
+                big_xyxy = self.merge_into_big_box(boxes)
+                # Append detection box (can be None if no text detected)
+
+
+                # Extract recognized text
+                recognized_text = ''.join(t for _, (t, c) in lines if c > 0)
+                recognized_text = recognized_text.replace(' ', '').lower()
+                gt_text_normalized = gt_text.replace(' ', '').lower()
+
+                if gt_text_normalized in recognized_text:
+                    dist = 0
+                else:
+                    dist = distance(recognized_text, gt_text_normalized)
+                # Recognized many unrelated characters, only add one character penalty
+                if dist > len(gt_text_normalized):
+                    dist = len(gt_text_normalized)
+
+            except Exception as e:
+                # Error handling (e.g., OCR parsing failure)
+                print(f"OCR processing failed: {str(e)}")
+                big_xyxy = None
+                dist = len(gt_text) if gt_text else 1  # Maximum penalty
+
+            reward = 1 - dist / max(len(gt_text), 1)  # Avoid division by zero
+            rewards.append(reward)
+            det_results.append(big_xyxy)
+
+        return rewards, det_results
