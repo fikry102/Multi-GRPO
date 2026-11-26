@@ -26,7 +26,7 @@ The dataset is used to evaluate whether a model can simultaneously satisfy text-
 
 ### CVPR 2026 Submission
 
-On **November 14, 2025**, we submitted Multi-GRPO to CVPR 2026.
+On **November 14, 2025**, we completed our submission of Multi-GRPO to CVPR 2026.
 
 ---
 
