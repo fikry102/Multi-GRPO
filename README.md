@@ -20,13 +20,13 @@
 
 The dataset is used to evaluate whether a model can simultaneously satisfy text-content and color constraints while maintaining aesthetic quality.
 
-### CVPR 2026 Submission
-
-On **November 14, 2025**, we submitted Multi-GRPO to CVPR 2026.
-
 ### arXiv Release
 
 🎉 Our paper was first posted to arXiv on **November 30, 2025**: [arXiv:2512.00743](https://arxiv.org/abs/2512.00743).
+
+### CVPR 2026 Submission
+
+On **November 14, 2025**, we submitted Multi-GRPO to CVPR 2026.
 
 ---
 
