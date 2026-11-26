@@ -8,7 +8,7 @@
 
 ### Journal version
 
-**November 26, 2026 (planned submission).** We plan to submit the revised Multi-GRPO manuscript to *Pattern Recognition* on this date. The abstract and method overview below follow the journal manuscript. Its terms *step-wise grouping* and *reward-wise grouping* describe the tree-based advantage estimation and reward-based grouping, respectively, in the [original arXiv preprint](https://arxiv.org/abs/2512.00743).
+**November 26, 2026.** We submitted the revised Multi-GRPO manuscript to *Pattern Recognition*. The abstract and method overview below follow the journal manuscript. Its terms *step-wise grouping* and *reward-wise grouping* describe the tree-based advantage estimation and reward-based grouping, respectively, in the [original arXiv preprint](https://arxiv.org/abs/2512.00743).
 
 ### Dataset Release
 
